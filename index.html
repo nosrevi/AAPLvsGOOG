@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+	<title>AAPL vs. GOOG</title>
+  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/util.js"></script>
+	<script src="js/interface.js"></script>
+	<script src="js/ai.js"></script>
+	<script src="js/class.js"></script>
+	<script src="js/timer.js"></script>
+	<script src="js/map.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/game.js"></script>
+</head>
+<body>
+
+<!--Google Analytics-->
+<!--<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-23019343-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>-->
+<h1>AAPL vs. GOOG</h1>
+
+<div id='result'>No Price</div>
+<div id='result2'>No Price</div>
+<button type="submit" onClick="getData();">Get Data</button>
+
+<div id="wrap">
+<canvas id="canvas"/></canvas>
+</div>
+<script>
+function getData() {
+    var url = "http://query.yahooapis.com/v1/public/yql";
+    var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('AAPL', 'GOOG')");
+
+    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
+      .done(function (data) {
+        $("#result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change);
+        $("#result2").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change);
+    })
+      .fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        $("#result").text('Request failed: ' + err);
+        $("#result").text('Request failed: ' + err);
+    });
+}
+</script>
+</body>
+
+
