@@ -3,18 +3,11 @@ var div1, div2, div3, loading, mode = 1, ready = false;
 
 var Game = function(){
 
-	var init = function( hash ){
+	var init = function(){
 		
-		if ( hash ){
-			mode = hash;
-			return gameStart();
-		}
 		loading = document.createElement( 'img' );
 		
 		loading.src = 'images/g/loading.jpg';
-
-
-
 		//var wrap = document.body.appendChild( document.createElement( "div" ) )
 		var wrap = document.getElementById( 'wrap' );
 
@@ -120,12 +113,18 @@ var gameStart = function(){
 		player2.init( 480, 240, -1 );  //left, top, direction
 	
 		Blood.init();
+
+		player1.keyManage.stop();
+		player1.ai = player1.implement( 'Ai' );
+		player1.ai.start();
 		
 		player2.keyManage.stop();
-
 		player2.ai = player2.implement( 'Ai' );
-
 		player2.ai.start();
+
+		player1.enemy.bloodBar.event.listen( 'empty', function(){
+			player1.ai.stop();
+		})
 
 		player2.enemy.bloodBar.event.listen( 'empty', function(){
 			player2.ai.stop();
@@ -143,6 +142,7 @@ var gameStart = function(){
 				if ( lock ) return;
 				lock = true;
 				mode = keycode - 48;
+				player1.ai.stop();
 				player2.ai.stop();
 				Game.reload();
 				setTimeout( function(){
@@ -411,6 +411,7 @@ Game.reload = function(){
 		 player2.keyManage.start();
 		 player2.direction = -1;
 		 if ( mode === 1 ){
+		 	player1.ai.start();
 		 	player2.ai.start();
 		 }
 		}, 30 )
