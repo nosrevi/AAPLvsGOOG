@@ -309,7 +309,7 @@
 				}
 
 				if ( state.specialSound ){
-					this.attack.audio.play( state.specialSound );
+					//this.attack.audio.play( state.specialSound );
 				}
 
 				if ( this.currState !== 'wait' ){
@@ -330,7 +330,7 @@
 
 
 					if ( self.currState === 'crouch_kick_attacked_fall' || self.currState === 'after_heavy_attacked_fall_down' || self.currState === 'dead' ){
-						self.attack.audio.play( 'sound/fall.mp3' );	
+						//self.attack.audio.play( 'sound/fall.mp3' );	
 					}
 
 					if ( self.currState === 'somesault_up' ){
@@ -603,7 +603,7 @@ Spirit.interface( 'Ai', Ai );
 				this.master.enemy.bloodBar.reduce( defenseBlood || 5 );
 			}
 			
-			this.master.enemy.attack.playAudio( 'sound/defense.mp3' );
+			//this.master.enemy.attack.playAudio( 'sound/defense.mp3' );
 
 		},
 
@@ -636,7 +636,7 @@ Spirit.interface( 'Ai', Ai );
 				
 				this.master.enemy.waveBoxing.ready_firing = false;
 				
-				this.playAudio( null, 1 );
+				//this.playAudio( null, 1 );
 
 				//this.master.enemy.attack.stop();
 
@@ -666,14 +666,14 @@ Spirit.interface( 'Ai', Ai );
 			this.width = this.height = easing[ 2 ];
 			this.animate_type = 'stick';
 			this.timer.start();
-			this.playAudio( this.sound[ 0 ] )
+			//this.playAudio( this.sound[ 0 ] )
 		},
 
 		stop: function(){
 			this.animate_type = 'normal';
 			this.timer.stop();
 			this.master.statusManage.set_attack_power( [ 0, false ] );  //攻击之后取消无敌状态
-			this.playAudio( null, 0 );
+			//this.playAudio( null, 0 );
 		},
 
 		playAudio: function( src, type ){
@@ -803,7 +803,7 @@ var WaveBoxing = Fighter.subClass( function( master ){
 
 			enemyDefense: function(){
 
-				this.master.enemy.attack.audio.play( 'sound/defense.mp3' );
+				//this.master.enemy.attack.audio.play( 'sound/defense.mp3' );
 
 				this.master.enemy.waveBoxing.ready_firing = false;
 
@@ -853,7 +853,7 @@ var WaveBoxing = Fighter.subClass( function( master ){
 
 				this.master.enemy.bloodBar.reduce( this.easing[ 6 ] || 50 );
 				
-				this.master.enemy.attack.audio.play( 'sound/hit_heavy_boxing.mp3' );
+				//this.master.enemy.attack.audio.play( 'sound/hit_heavy_boxing.mp3' );
 
 			},
 
