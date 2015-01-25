@@ -575,7 +575,7 @@ var Interfaces = {
 			
 			var keyQueue = Interfaces.Queue();
 
-			addEventListener( document, 'keydown', function( ev ){
+      $('body').on( 'keydown', function(ev) {
 		
 				if ( lock ) return;
 		
@@ -618,7 +618,8 @@ var Interfaces = {
 
 			})
 
-			addEventListener( document, 'keyup', function( ev ){
+			//addEventListener( document, 'keyup', function( ev ){
+			$('body').on( 'keyup', function( ev ){
 				
 				if ( lock ) return;
 				
@@ -701,10 +702,6 @@ var Interfaces = {
 		
 		
 	}(),
-	
-	
-
-
 
 
 	Collision: function(){

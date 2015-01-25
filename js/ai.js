@@ -104,7 +104,6 @@ var Ai = function(){
 				}
 			}
 
-
 			else {
 				return response = {
 					correct: [ 'force_back', 'light_wave_boxing', [ 'jump_back', 'heavy_kick' ] ],
@@ -137,7 +136,6 @@ var Ai = function(){
 				}
 			}
 
-
 			else {
 				return response = {
 					correct: [ 'force_forward', 'jump_back', 'heavy_wave_boxing', [ 'force_back', 'force_back' ] ],
@@ -159,21 +157,13 @@ var Ai = function(){
 				wrong: [ 'force_wait', 'crouch_heavy_kick' ]
 			}
 
-
 		}
-
 		
 		return response;
-		
-
 
 	}
 	
-	
-
-	
 	var framefn = function(){
-
 
 		if ( self.queue.isEmpty() && !queue.isEmpty() ){
 			return self.play( queue.dequeue() || 'force_wait' );
@@ -183,14 +173,12 @@ var Ai = function(){
 
 		var re = responsefn( distance );
 
-
 		if ( !re ){
 			re = {
 				correct: [ 'force_wait' ],
 				wrong: [ 'force_wait' ]	
 			}
 		}
-
 		
 		if ( random( 10 ) < level ){
 			try{
@@ -202,11 +190,9 @@ var Ai = function(){
 			re = re.wrong;
 		}
 		
-
 		re = re[ random( re.length ) ];
 		//console.log( re )
 		queue.add( re );
-		
 		
 		var dequeue = queue.dequeue();
 			//console.log( dequeue );

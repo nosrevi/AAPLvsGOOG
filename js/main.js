@@ -60,8 +60,6 @@
 
 		})
 
-
-
 	var Spirit = Block.subClass( function( config ){
 			this.config = config;
 			this.name = config.name;
@@ -134,14 +132,12 @@
 				}
 
 				if ( this.jump_combo( state ) && state !== 'force_wait' ) return;  //空中组合技
-			
 
 				if ( this.defense( state ) ) return;  //是否在防御状态
 				
 				var lock_level = Config.play[ state ].lock || 0;			
 				
 				var old_lock_leval = this.lock.getLevel() || 0;
-				
 
 				if ( !force ){
 	
@@ -150,7 +146,6 @@
 					}
 
 				}
-				
 				
 				this.lock.lock( lock_level );   //级别, 解锁延迟.
 
@@ -286,11 +281,9 @@
 					this.changeBg( state.bg, state.framesNum, null, state.position );
 				}
 
-
 				if ( state.easing[ 1 ] === null ){
 					var top = this.f_top - this.top + ( this.f_height - this.height ) * Config.map.spiritZoom;
 				}
-
 
 				this.currState = state.currState;
 				
@@ -324,7 +317,6 @@
 				}
 
 				this.animate.event.fireEvent( 'framesStart' );
-				
 
 			},
 
@@ -371,11 +363,9 @@
 
 				})
 
-
 				this.animate.event.listen( 'stopPush', function(){
 					self.states.forward.easing[ 0 ] = 150;
 				});
-
 				
 				this.animate.event.listen( 'frameStart', function(){
 
@@ -409,8 +399,6 @@
 					}
 
 				});
-				
-
 
 				this.collision.event.listen( 'affirm', function( obj, dir ){
 
@@ -466,13 +454,9 @@
 
 			}
 
-
 		}
 
 	)
-
-
-
 
 Spirit.interface( 'Animate', Interfaces.Animate );
 
@@ -521,7 +505,6 @@ Spirit.interface( 'Ai', Ai );
 				self.stop();
 			})
 		
-		
 			this.master.enemy.bloodBar.event.listen( 'empty', function(){
 				setTimeout( function(){
 					Game.reload();
@@ -532,7 +515,6 @@ Spirit.interface( 'Ai', Ai );
 				}
 				self.master.enemy.play( 'dead' );
 			})
-
 
 			var framefn = function(){
 				if ( self.animate_type === 'stick' ){
@@ -918,7 +900,5 @@ var WaveBoxing = Fighter.subClass( function( master ){
 		 } 
 	
 )
-
-
 
 WaveBoxing.interface( 'SpiritFrames', Interfaces.SpiritFrames );

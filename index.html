@@ -35,13 +35,32 @@
 
 <div id='result'>No Price</div>
 <div id='result2'>No Price</div>
-<button type="submit" onClick="getData();">Get Data</button>
+<button type="submit" onClick="test();">Get Data</button>
 
+<!--<div id="wrap" style="position: relative; left: 449px; top: 20px; overflow: hidden;">-->
 <div id="wrap">
 <canvas id="canvas"/></canvas>
 </div>
 <script>
+//$(document).ready(setInterval(getData,1000));
+
 function getData() {
+    var url = "http://query.yahooapis.com/v1/public/yql";
+    var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('AAPL', 'GOOG')");
+
+    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
+      .done(function (data) {
+        $("#result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change_PercentChange);
+        $("#result2").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change_PercentChange);
+    })
+      .fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        $("#result").text('Request failed: ' + err);
+        $("#result2").text('Request failed: ' + err);
+    });
+}
+
+function getHistData() {
     var url = "http://query.yahooapis.com/v1/public/yql";
     var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('AAPL', 'GOOG')");
 
@@ -53,8 +72,16 @@ function getData() {
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
         $("#result").text('Request failed: ' + err);
-        $("#result").text('Request failed: ' + err);
+        $("#result2").text('Request failed: ' + err);
     });
+}
+
+function test() {
+  var e = $.Event("keydown", {keyCode: 85});
+  var f = $.Event("keyup", {keyCode: 85});
+  $('body').trigger(e);
+  $('body').trigger(f);
+  //setTimeout(function(){$('body').trigger(f)}, 500);
 }
 </script>
 </body>

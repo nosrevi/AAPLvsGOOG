@@ -81,27 +81,4 @@ var Class = function(){
 		}
 	}
 	
-	
 }()
-
-
-
-
-
-
-/*
-
-Sven = Canvas.subClass( function( a, b, c ){
-	this.age = a;
-});
-
-
-Sven.addMethod( 'add1', function(){
-	return 'haha';
-})
-
-*/
-
-
-
-
