@@ -46,9 +46,6 @@ var Game = function(){
 		div2.style.width = '500px';
 		
 		div2.style.height = '500px';
-		
-	
-
 
 		document.body.style.position = 'relative'
 		document.body.style.left = ( document.body.offsetWidth  - 900 ) / 2 + 'px'
@@ -122,11 +119,26 @@ var gameStart = function(){
 		player2.ai = player2.implement( 'Ai' );
 		player2.ai.start();
 
+    var player_dead = 0;
 		player1.enemy.bloodBar.event.listen( 'empty', function(){
+      player_dead++ ;
+      alert(Blood.deadCount);
+//      if (player_dead == 2) {
+//        $('#draw').val(+$('#draw').val() + 1);
+//      } else {
+//        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
+//      }
 			player1.ai.stop();
 		})
 
 		player2.enemy.bloodBar.event.listen( 'empty', function(){
+      player_dead++ ;
+      alert(Blood.deadCount);
+//      if (player_dead == 2) {
+//        $('#draw').val(+$('#draw').val() + 1);
+//      } else {
+//        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
+//      }
 			player2.ai.stop();
 		})
 
@@ -151,14 +163,13 @@ var gameStart = function(){
 			}
 		}	
 	
-	
 }
-
 
 var Blood = function(){
 	
 	var div;
-	
+  var deadCount = 0;
+
 	var init = function(){
 
 		div = document.createElement( 'div' );
@@ -189,7 +200,6 @@ var Blood = function(){
 
 		init();
 	}
-	
 
 	var animateWidth = function( timeAll, _f_width, width ){
 
@@ -268,6 +278,7 @@ var Blood = function(){
 			animate = animateWidth( timeAll, currWidth, _w );
 
 			if ( _blood < 0 ){
+        deadCount++;
 				event.fireEvent( 'empty' );
 			}
 
@@ -290,7 +301,6 @@ var Blood = function(){
 		var reload = function(){
 			reduce( _blood - _f__blood );
 		}
-		
 		
 		return {
 			reduce: reduce,
@@ -340,6 +350,7 @@ var Blood = function(){
 			animate = animateWidth( timeAll, currWidth, _w );
 
 			if ( _blood < 0 ){
+        deadCount++;
 				event.fireEvent( 'empty' );
 			}
 
@@ -375,12 +386,12 @@ var Blood = function(){
 
 	}
 	
-	
 	return {
 		init: init,
 		leftBar: leftBar,
 		rightBar: rightBar,
-		reload: reload
+		reload: reload,
+    deadCount: deadCount
 	}
 	
 }()
@@ -392,7 +403,7 @@ window.onload = function(){
 }
 
 
-Game.reload = function(){
+Game.reload = function(lastGame){
 	player1.keyManage.stop();
 	player2.keyManage.stop();
 	player1.bloodBar.reload();

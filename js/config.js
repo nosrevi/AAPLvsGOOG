@@ -19,7 +19,7 @@ var Config = {
 	Spirit: {
 
 		RYU1: {
-			name: 'RYU1',
+			name: 'AAPL',
 			states: {
 				default: 'wait',
 				/******************** ÒÆ¶¯ *********************/
@@ -727,7 +727,7 @@ var Config = {
 		},
 
 		RYU2: {
-			name: 'RYU2',
+			name: 'GOOG',
 			states: {
 				default: 'wait',
 				/******************** ÒÆ¶¯ *********************/
