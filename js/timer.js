@@ -1,7 +1,6 @@
-
 	var Timer = function(){
 
-		var t, timers = [], curr, prepareTimer = [], slowTimer = 1, index = 0;
+		var t, timers = [], curr, prepareTimer = [], slowTimer = 8, index = 0;
 		
 		var getSlow = function(){
 			return Config.fps * slowTimer;	
@@ -90,8 +89,6 @@
 			slowTimer = 1;
 		}
 		
-		
-		
 	var add = function( fn ){
 		
 		fn.state = 'normal';
@@ -130,6 +127,5 @@
 			normal: normal,
 			checkZindex: checkZindex
 		}
-
 
 	}()

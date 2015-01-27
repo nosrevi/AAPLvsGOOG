@@ -1,6 +1,6 @@
 var Ai = function(){
 
-	var self = this, timer, enemy = self.enemy, queue = Interfaces.Queue(), level = 11;
+	var self = this, timer, name = self.name, enemy = self.enemy, queue = Interfaces.Queue(), level = 11;
 
 	enemy.bloodBar.event.listen( 'drain', function(){
 		timer.stop();
@@ -169,34 +169,50 @@ var Ai = function(){
 			return self.play( queue.dequeue() || 'force_wait' );
 		}
 
-		var distance = self.statusManage.get().enemy_distance_type;
+    console.log('here');
+    var url = "http://query.yahooapis.com/v1/public/yql";
+    //var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol ='"+name+"'");
+    var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol IN ('AAPL')");
 
-		var re = responsefn( distance );
+    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http:datatables.org/alltables.env")
+      .done(function (data) {
+      var per = data.query.results.quote.Change_PercentChange;
+        $("#"+name+"_result").text("Bid Price: " + data.query.results.quote.LastTradePriceOnly + " Change: " + data.query.results.quote.Change_PercentChange);
 
-		if ( !re ){
-			re = {
-				correct: [ 'force_wait' ],
-				wrong: [ 'force_wait' ]	
-			}
-		}
-		
-		if ( random( 10 ) < level ){
-			try{
-				re = re.correct; 	
-			}catch(e){
-				console.log( enemy.state )	
-			}
-		}else{
-			re = re.wrong;
-		}
-		
-		re = re[ random( re.length ) ];
-		//console.log( re )
-		queue.add( re );
-		
-		var dequeue = queue.dequeue();
-			//console.log( dequeue );
-		return self.play( dequeue || 'wait' );
+      var distance = self.statusManage.get().enemy_distance_type;
+
+      var re = responsefn( distance );
+
+      if ( !re ){
+        re = {
+          correct: [ 'force_wait' ],
+          wrong: [ 'force_wait' ]	
+        }
+      }
+    
+      if ( random( 10 ) < level ){
+        try{
+          re = re.correct; 	
+        }catch(e){
+          console.log( enemy.state )	
+        }
+      }else{
+        re = re.wrong;
+      }
+      
+      re = re[ random( re.length ) ];
+      queue.add( re );
+      
+      var dequeue = queue.dequeue();
+        console.log( dequeue );
+      return self.play( dequeue || 'wait' );
+    })
+      .fail(function (jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        $("#result").text('Request failed: ' + err);
+        $("#result2").text('Request failed: ' + err);
+        return self.play( 'wait' );
+    });
 		//return self.play( 'jump_back' );
 		try{
 
@@ -223,8 +239,6 @@ var Ai = function(){
 
 		//console.log( distance );
 		
-		
-		
 	}
 	
 	timer = Timer.add( framefn );
@@ -245,7 +259,5 @@ var Ai = function(){
 		stop: stop
 		
 	}
-	
-	
 	
 }

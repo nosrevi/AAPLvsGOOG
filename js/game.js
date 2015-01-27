@@ -119,10 +119,7 @@ var gameStart = function(){
 		player2.ai = player2.implement( 'Ai' );
 		player2.ai.start();
 
-    var player_dead = 0;
 		player1.enemy.bloodBar.event.listen( 'empty', function(){
-      player_dead++ ;
-      alert(Blood.deadCount);
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
@@ -132,8 +129,6 @@ var gameStart = function(){
 		})
 
 		player2.enemy.bloodBar.event.listen( 'empty', function(){
-      player_dead++ ;
-      alert(Blood.deadCount);
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
@@ -168,7 +163,6 @@ var gameStart = function(){
 var Blood = function(){
 	
 	var div;
-  var deadCount = 0;
 
 	var init = function(){
 
@@ -278,7 +272,6 @@ var Blood = function(){
 			animate = animateWidth( timeAll, currWidth, _w );
 
 			if ( _blood < 0 ){
-        deadCount++;
 				event.fireEvent( 'empty' );
 			}
 
@@ -350,7 +343,6 @@ var Blood = function(){
 			animate = animateWidth( timeAll, currWidth, _w );
 
 			if ( _blood < 0 ){
-        deadCount++;
 				event.fireEvent( 'empty' );
 			}
 
@@ -391,7 +383,6 @@ var Blood = function(){
 		leftBar: leftBar,
 		rightBar: rightBar,
 		reload: reload,
-    deadCount: deadCount
 	}
 	
 }()

@@ -2,8 +2,10 @@
 var Config = {
 
 	fps: 17,
+	//fps: 57,
 
-	key_fps: 800,
+	//key_fps: 800,
+	key_fps: 10,
 
 	map: {
 		bgBehind: 'behind',

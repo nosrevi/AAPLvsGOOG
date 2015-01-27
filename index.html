@@ -33,8 +33,8 @@
 </script>-->
 <h1>AAPL vs. GOOG</h1>
 
-<div id='result'>No Price</div>
-<div id='result2'>No Price</div>
+<div id='AAPL_result'>No Price</div>
+<div id='GOOG_result'>No Price</div>
 <div>AAPL Win: <input id='AAPL_win' type='text' value="0"/></div>
 <div>GOOG Win: <input id='GOOG_win' type='text' value="0"/></div>
 <div>Draw Game: <input id='draw' type='text' value="0"/></div>
@@ -45,7 +45,7 @@
 <canvas id="canvas"/></canvas>
 </div>
 <script>
-//$(document).ready(setInterval(getData,1000));
+//$(document).ready(setInterval(getData,1002));
 
 function getData() {
     var url = "http://query.yahooapis.com/v1/public/yql";
