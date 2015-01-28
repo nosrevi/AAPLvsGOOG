@@ -123,7 +123,7 @@ var gameStart = function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-//        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
+        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
 //      }
 			player1.ai.stop();
 		})
@@ -132,7 +132,7 @@ var gameStart = function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-//        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
+        $('#'+player2.name+'_win').val(+$('#'+player2.name+'_win').val() + 1);
 //      }
 			player2.ai.stop();
 		})

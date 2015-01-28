@@ -4,7 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
 	<title>AAPL vs. GOOG</title>
-  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="js/config.js"></script>
 	<script src="js/util.js"></script>
 	<script src="js/interface.js"></script>
@@ -45,7 +45,7 @@
 <canvas id="canvas"/></canvas>
 </div>
 <script>
-//$(document).ready(setInterval(getData,1002));
+$(document).ready(setInterval(getData,1000));
 
 function getData() {
     var url = "http://query.yahooapis.com/v1/public/yql";
@@ -53,8 +53,10 @@ function getData() {
 
     $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
       .done(function (data) {
-        $("#result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change_PercentChange);
-        $("#result2").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change_PercentChange);
+        $("#AAPL_result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change_PercentChange);
+        $("#GOOG_result").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change_PercentChange);
+        var e = $.Event("quote",{AAPL: data.query.results.quote[0].ChangeinPercent, GOOG:data.query.results.quote[1].ChangeinPercent});
+        $('body').trigger(e);
     })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
@@ -79,13 +81,6 @@ function getHistData() {
     });
 }
 
-function test() {
-  var e = $.Event("keydown", {keyCode: 85});
-  var f = $.Event("keyup", {keyCode: 85});
-  $('body').trigger(e);
-  $('body').trigger(f);
-  //setTimeout(function(){$('body').trigger(f)}, 500);
-}
 </script>
 </body>
 

@@ -1,6 +1,6 @@
 	var Timer = function(){
 
-		var t, timers = [], curr, prepareTimer = [], slowTimer = 8, index = 0;
+		var t, timers = [], curr, prepareTimer = [], slowTimer = 1, index = 0;
 		
 		var getSlow = function(){
 			return Config.fps * slowTimer;	
