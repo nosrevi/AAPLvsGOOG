@@ -104,10 +104,14 @@ var Interfaces = {
 			return stack;	
 		}
 
+		var length = function(){
+			return stack.length;
+		}
+
 		var last = function(){
 			return stack.length && 	stack[ stack.length - 1 ];
 		}
-		
+
 		return {
 			add: add,
 			unshift: unshift,
@@ -116,6 +120,7 @@ var Interfaces = {
 			isEmpty: isEmpty,
 			fireEach: fireEach,
 			get: get,
+			length: length,
 			last: last
 		}
 

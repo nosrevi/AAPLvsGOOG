@@ -1,6 +1,6 @@
 var Ai = function(){
 
-	var self = this, timer, name = self.name, enemy = self.enemy, queue = Interfaces.Queue(), level = 11;
+	var self = this, timer, name = self.name, enemy = self.enemy, queue = Interfaces.Queue(), level = 5;
 
 	enemy.bloodBar.event.listen( 'drain', function(){
 		timer.stop();
@@ -9,7 +9,6 @@ var Ai = function(){
 	var random = function( num ){
 		return Math.random() * num | 0;
 	}
-
 
 	var responsefn = function( distance ){
 
@@ -168,15 +167,15 @@ var Ai = function(){
 		if ( self.queue.isEmpty() && !queue.isEmpty() ){
 			return self.play( queue.dequeue() || 'force_wait' );
 		}
-
-    console.log('here');
     var url = "http://query.yahooapis.com/v1/public/yql";
     //var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol ='"+name+"'");
     var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol IN ('AAPL')");
-
+console.log(self.queue.length());
+        if (self.queue.length() < 4 ) {
     $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http:datatables.org/alltables.env")
       .done(function (data) {
       var per = data.query.results.quote.Change_PercentChange;
+        per = Math.random();
         $("#"+name+"_result").text("Bid Price: " + data.query.results.quote.LastTradePriceOnly + " Change: " + data.query.results.quote.Change_PercentChange);
 
       var distance = self.statusManage.get().enemy_distance_type;
@@ -190,7 +189,7 @@ var Ai = function(){
         }
       }
     
-      if ( random( 10 ) < level ){
+      if ( random( 10 ) < level + per * 100 ){ // Assuming change percentage is +-0.01 ~ +-0.1
         try{
           re = re.correct; 	
         }catch(e){
@@ -203,41 +202,41 @@ var Ai = function(){
       re = re[ random( re.length ) ];
       queue.add( re );
       
-      var dequeue = queue.dequeue();
-        console.log( dequeue );
-      return self.play( dequeue || 'wait' );
     })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
         $("#result").text('Request failed: ' + err);
         $("#result2").text('Request failed: ' + err);
-        return self.play( 'wait' );
     });
+        var per = Math.random();
+
+      var distance = self.statusManage.get().enemy_distance_type;
+
+      var re = responsefn( distance );
+
+      if ( !re ){
+        re = {
+          correct: [ 'force_wait' ],
+          wrong: [ 'force_wait' ]	
+        }
+      }
+    
+      if ( random( 10 ) < level + per * 100 ){ // Assuming change percentage is +-0.01 ~ +-0.1
+        try{
+          re = re.correct; 	
+        }catch(e){
+          console.log( enemy.state )	
+        }
+      }else{
+        re = re.wrong;
+      }
+      
+      re = re[ random( re.length ) ];
+      queue.add( re );
+      var dequeue = queue.dequeue();
+      return self.play( dequeue || 'wait' );
+        }
 		//return self.play( 'jump_back' );
-		try{
-
-		}catch(e){
-			console.log( 111 )
-		}
-		
-		//console.log( random() )
-		
-		
-		
-		
-		//console.log( re.correct )
-		
-	//	console.dir( re )
-		
-		//var re = responsefn( distance ) || ( response[ enemy.state ] && response[ enemy.state ][ distance  ] );
-		
-
-		
-	//	console.log( enemy.state )
-		
-		//self.play( re || 'wait' );
-
-		//console.log( distance );
 		
 	}
 	

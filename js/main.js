@@ -582,7 +582,6 @@ Spirit.interface( 'Ai', Ai );
 
 		},
 
-
 		enemyDefense: function(){
 
 			if ( this.master.statusManage.isCrouch() && this.master.enemy.statusManage.isStand() ){
@@ -711,9 +710,6 @@ Spirit.interface( 'Ai', Ai );
 
 )
 
-
-
-
 Fighter.interface( 'Animate', Interfaces.Animate );
 
 Fighter.interface( 'Collision', Interfaces.Collision );
@@ -721,9 +717,6 @@ Fighter.interface( 'Collision', Interfaces.Collision );
 Fighter.interface( 'AttackEffect', Interfaces.AttackEffect );
 
 Fighter.interface( 'Audio', Interfaces.Audio );
-
-
-
 
 var WaveBoxing = Fighter.subClass( function( master ){
 
