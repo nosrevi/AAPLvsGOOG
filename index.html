@@ -46,12 +46,13 @@
 </div>
 <script>
 $(document).ready(setInterval(getData,1000));
+getData();
 
 function getData() {
     var url = "http://query.yahooapis.com/v1/public/yql";
     var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('AAPL', 'GOOG')");
 
-    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
+    $.getJSON(url, 'q=' + data + "&format=json&env=http://datatables.org/alltables.env")
       .done(function (data) {
         $("#AAPL_result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change_PercentChange);
         $("#GOOG_result").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change_PercentChange);

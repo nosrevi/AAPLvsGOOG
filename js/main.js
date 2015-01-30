@@ -1,5 +1,4 @@
 
-
 		var Block = Class.create( function( top, left, width, height ){
 			this.top = top;
 			this.left = left;

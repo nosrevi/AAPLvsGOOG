@@ -99,7 +99,7 @@ var Ai = function(){
 			if ( attack_type === 'attack' ){  //Èç¹ûÊÇ¹¥»÷
 				return response = {
 					correct: [ enemy_statusManage.isCrouch() ? 'stand_crouch_defense' : 'stand_crouch_defense', 'crouch_heavy_kick', 'jump_whirl_kick', 'jump_heavy_impact_boxing', 'crouch_heavy_boxing' ],
-					wrong: [ 'haha', '' ]
+					wrong: [ 'force_wait', 'force_wait' ]
 				}
 			}
 
@@ -168,10 +168,10 @@ var Ai = function(){
         return self.play( queue.dequeue() || 'force_wait' );
       }
 
-      $('body').on('quote', function(ev){
-        var per = +ev[name].slice(0,-1);          
-        level = 5 + per;
-      });
+//      $('body').on('quote', function(ev){
+//        var per = +ev[name].slice(0,-1);          
+//        level = 5 + per;
+//      });
 
       var distance = self.statusManage.get().enemy_distance_type;
 
@@ -186,13 +186,11 @@ var Ai = function(){
     
       if ( random( 10 ) < level ){ // Assuming change percentage is +-0.01 ~ +-0.1
         try{
-            console.log(name+'correct');
           re = re.correct; 	
         }catch(e){
           console.log( enemy.state )	
         }
       }else{
-            console.log(name+'wrong');
         re = re.wrong;
       }
       
