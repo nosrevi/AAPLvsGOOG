@@ -8,15 +8,6 @@ var Map = function(){
 	var init = function(){
 
 		spirits = Array.prototype.slice.call( arguments, 0 );
-
-		//canvas = document.body.appendChild( document.createElement( 'canvas' ) );
-		canvas = document.getElementById( 'canvas' );
-		
-		canvas.style.position = 'absolute';
-
-		canvas.style.top = '200px';
-
-		canvas.style.zIndex = 10001;
 		
 		Map.width = canvas.width = 900 || map.windowWidth;
 		Map.height = canvas.height = 490 || map.height;
@@ -68,7 +59,7 @@ var Map = function(){
 	
 		var bg = document.createElement( 'div' );
 	
-		document.body.appendChild( bg );
+		$('#wrap').append(bg);
 			
 		var ft1 = document.createElement( 'img' );
 			

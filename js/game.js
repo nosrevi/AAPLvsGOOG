@@ -5,31 +5,14 @@ var Game = function(){
 
 	var init = function(){
 		
-		loading = document.createElement( 'img' );
-		
-		loading.src = 'images/g/loading.jpg';
-		//var wrap = document.body.appendChild( document.createElement( "div" ) )
-		var wrap = document.getElementById( 'wrap' );
+    loading = $('<img>').attr({id: 'loading', src: 'images/g/loading.jpg'})
+		$('#wrap').append( loading ).css('left', (document.body.offsetWidth  - 900 ) / 2 + 'px');
+    
 
-		document.body.appendChild( loading );
-		
-		div = document.body.appendChild( document.createElement( 'div' ) );
-		
-		div.style.position = 'absolute';
-		
-		div.style.top = '200px';
-		
-		div.style.left = '450px';
-
-		div.style.fontSize = '45px'
-
-		div.style.color = '#fff';
-	
-		div.style.width = '500px';
-		
-		div.style.height = '100px'
-
-		div.innerHTML = 'loading...';
+		//document.body.style.position = 'relative'
+		//document.body.style.left = ( document.body.offsetWidth  - 900 ) / 2 + 'px'
+		//document.body.style.top = '20px'
+		//document.body.style.overflow = 'hidden';
 
 		div2 = document.body.appendChild( document.createElement( 'div' ) );
 				
@@ -47,13 +30,6 @@ var Game = function(){
 		
 		div2.style.height = '500px';
 
-		document.body.style.position = 'relative'
-		document.body.style.left = ( document.body.offsetWidth  - 900 ) / 2 + 'px'
-		document.body.style.top = '20px'
-		document.body.style.overflow = 'hidden';
-		//document.body.style.backgroundColor = '#A0AAB2';
-
-
 		
 		Util.loadImg( function(){	
 			
@@ -65,13 +41,11 @@ var Game = function(){
 		
 		});
 
-
 	}
 
 	return {
 		init: init
 	}
-
 
 }();
 
@@ -79,24 +53,18 @@ var Game = function(){
 
 var gameStart = function(){
 	
-		document.body.removeChild( div );
-	
-		document.body.removeChild( div2 );
-	
-		document.body.removeChild( loading );
+		$('#wrap > img').remove();
+		$('#wrap > div').remove();
 			
 		Timer.start();
 	
 		window.player1 = Spirit.getInstance( Config.Spirit.RYU1 );
-	
 		window.player2 = Spirit.getInstance( Config.Spirit.RYU2 );
 	
 		player1.setEnemy( player2 );
-	
 		player2.setEnemy( player1 );
 
 		player1.bloodBar = Blood.leftBar();
-	
 		player2.bloodBar = Blood.rightBar();
 	
 		window.map = Map.init();
@@ -106,7 +74,6 @@ var gameStart = function(){
 		Spirit.interface( 'Stage', Stage );
 
 		player1.init( 280, 240, 1 );   //left, top, direction
-	
 		player2.init( 480, 240, -1 );  //left, top, direction
 	
 		Blood.init();
@@ -174,7 +141,7 @@ var Blood = function(){
 		div.style.position = 'absolute';
 		div.style.zIndex = 9998;
 
-		document.body.appendChild( div );
+		$('#wrap').append( div );
 
 		var img = document.createElement( 'img' );
 		img.style.width = '720px';
@@ -186,7 +153,7 @@ var Blood = function(){
 	
 	var reload = function(){
 		
-		var d = document.body;
+		var d = $('#wrap');
 
 		while( d.firstChild != null && d.firstChild.tagName !== 'CANVAS'  ){
 			d.removeChild( d.firstChild );
@@ -242,7 +209,7 @@ var Blood = function(){
 		div.style.zIndex = 9999;
 		div.style.border = '1px #fff solid';
 
-		document.body.appendChild( div );
+		$('#wrap').append(div);
 
 		var _blood = 1500, _f_left = 96, _f__blood = 1500, _f_width = 322, currWidth = _f_width, timer, animate, emptyfn;
 		
@@ -314,7 +281,7 @@ var Blood = function(){
 		div.style.position = 'absolute';
 		div.style.zIndex = 9999;
 		div.style.border = '1px #fff solid';
-		document.body.appendChild( div );
+		$('#wrap').append(div);
 
 		var _blood = 1500, _f_left = 493, _f__blood = 1500, _f_width = 320, currWidth = _f_width, timer, animate, emptyfn, queue = Interfaces.Queue();
 
