@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
-	<title>AAPL vs. GOOG</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+  <title>AAPL vs. GOOG</title>
   <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="js/config.js"></script>
-	<script src="js/util.js"></script>
-	<script src="js/interface.js"></script>
-	<script src="js/ai.js"></script>
-	<script src="js/class.js"></script>
-	<script src="js/timer.js"></script>
-	<script src="js/map.js"></script>
-	<script src="js/main.js"></script>
-	<script src="js/game.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/interface.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/class.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/game.js"></script>
   <link rel="stylesheet" type="text/css" href="main.css">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 </head>
 <body>
 
@@ -36,28 +35,39 @@
 
 </script>-->
 <div class="container">
-  <h1>AAPL vs. GOOG</h1>
+    <div class="jumbotron">
+    <h2>AAPL vs. GOOG</h2>
+    <p>See AAPL fights GOOG in classic Street Fighter game! The more bullish stock has a higher possibility to make the right move.</p>
+    </div>
 
   <div class="row">
-    <div class="col-lg-6" align="right">
-     <div id='AAPL_quote'></div>
+    <div class="col-lg-3" align="right">
+      <div>Bid Price:</div>
+      <div>Change:</div>
+      <div>Change in percent:</div>
+      <div>Wins:</div>
+    </div>
+    <div class="col-lg-3" align="right">
+      <div id='AAPL_quote'></div>
       <div id='AAPL_change'></div>
       <div id='AAPL_per'></div>
-      <div>AAPL Win: <input id='AAPL_win' type='text' value="0"/></div>
+      <div><input id='AAPL_win' type='text' value="0"/></div>
     <div>Draw Game: <input id='draw' type='text' value="0"/></div>
     </div>
     <div class="col-lg-6">
       <div id='GOOG_quote'></div>
       <div id='GOOG_change'></div>
       <div id='GOOG_per'></div>
-      <div>GOOG Win: <input id='GOOG_win' type='text' value="0"/></div>
+      <div><input id='GOOG_win' type='text' value="0"/></div>
     <button type="submit" onClick="test();">Get Data</button>
     </div>
   </div>
 
 <!--<div id="wrap" style="position: relative; left: 449px; top: 20px; overflow: hidden;">-->
+  <div class="row">
 <div id="wrap">
 <canvas id="canvas"/></canvas>
+</div>
 </div>
 <script>
 $(document).ready(setInterval(getData,2000));
@@ -69,12 +79,12 @@ function getData() {
 
     $.getJSON(url, 'q=' + data + "&format=json&env=http://datatables.org/alltables.env")
       .done(function (data) {
-        $("#AAPL_quote").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly);
-        $("#AAPL_change").text("Change: " + data.query.results.quote[0].ChangeRealtime);
-        $("#AAPL_per").text("Change in percentage: " + data.query.results.quote[0].PercentChange);
-        $("#GOOG_quote").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly);
-        $("#GOOG_change").text("Change: " + data.query.results.quote[1].ChangeRealtime);
-        $("#GOOG_per").text("Change in percentage: " + data.query.results.quote[1].PercentChange);
+        $("#AAPL_quote").text(data.query.results.quote[0].LastTradePriceOnly);
+        $("#AAPL_change").text(data.query.results.quote[0].ChangeRealtime);
+        $("#AAPL_per").text(data.query.results.quote[0].PercentChange);
+        $("#GOOG_quote").text(data.query.results.quote[1].LastTradePriceOnly);
+        $("#GOOG_change").text(data.query.results.quote[1].ChangeRealtime);
+        $("#GOOG_per").text(data.query.results.quote[1].PercentChange);
         var e = $.Event("quote",{AAPL: data.query.results.quote[0].ChangeinPercent, GOOG:data.query.results.quote[1].ChangeinPercent});
         $('body').trigger(e);
     })

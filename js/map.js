@@ -71,7 +71,7 @@ var Map = function(){
 
 		bg.style.position = 'absolute';
 		bg.style.left = 0;
-		bg.style.top = '200px';
+		//bg.style.top = '200px';
 		bg.style.width = '910px';
 		bg.style.height = '490px';
 		bg.style.overflow = 'hidden';
