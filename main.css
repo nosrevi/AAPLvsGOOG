@@ -3,7 +3,6 @@
   margin-left: auto;
   margin-right: auto;
   height: 500px;
-  width: 100%;
 }
 
 #canvas {
@@ -17,4 +16,85 @@ h1 {
 
 div {
   font-size: 20px;
+}
+
+.blood {
+  width: 720px;
+  height: 32px;
+  top: 35px;
+  left: 96px;
+  position: absolute;
+  z-index: 9998
+}
+
+.blood > img {
+  width: 720px;
+  height: 32px;
+}
+
+td {
+  width: 25%;
+}
+
+td.ra {
+  text-align: right; 
+}
+
+@-webkit-keyframes bullFadeIt {
+  0%  { background-color: #272; }
+  100%    { background-color: #FFFFFF; }
+}
+@-moz-keyframes bullFadeIt {
+  0%  { background-color: #272; }
+  100%    { background-color: #FFFFFF; }
+}
+@-o-keyframes bullFadeIt {
+  0%  { background-color: #272; }
+  100%    { background-color: #FFFFFF; }
+}
+@keyframes bullFadeIt {
+  0%  { background-color: #272; }
+  100%    { background-color: #FFFFFF; }
+}
+
+.bull {    
+    background-image:none !important;
+    color: #272;
+}
+
+.bull-fade {    
+    -webkit-animation: bullFadeIt 1s ease-out; 
+       -moz-animation: bullFadeIt 1s ease-out; 
+         -o-animation: bullFadeIt 1s ease-out; 
+            animation: bullFadeIt 1s ease-out; 
+}
+
+@-webkit-keyframes bearFadeIt {
+  0%  { background-color: #c11; }
+  100%    { background-color: #FFFFFF; }
+}
+@-moz-keyframes bearFadeIt {
+  0%  { background-color: #c11; }
+  100%    { background-color: #FFFFFF; }
+}
+@-o-keyframes bearFadeIt {
+  0%  { background-color: #c11; }
+  100%    { background-color: #FFFFFF; }
+}
+@keyframes bearFadeIt {
+  0%  { background-color: #c11; }
+  100%    { background-color: #FFFFFF; }
+}
+
+.bear {    
+    background-image:none !important;
+    color: #c11;
+}
+
+.bear-fade {    
+    background-image:none !important;
+    -webkit-animation: bearFadeIt 1s ease-out; 
+       -moz-animation: bearFadeIt 1s ease-out; 
+         -o-animation: bearFadeIt 1s ease-out; 
+            animation: bearFadeIt 1s ease-out; 
 }

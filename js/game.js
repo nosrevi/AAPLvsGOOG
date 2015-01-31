@@ -1,35 +1,26 @@
 ﻿
-var div1, div2, div3, loading, mode = 1, ready = false;
+var mode = 1;
 
 var Game = function(){
 
 	var init = function(){
 		
-    loading = $('<img>').attr({id: 'loading', src: 'images/g/loading.jpg'})
+        var loading = $('<img>').attr({id: 'loading', src: 'images/g/loading.jpg'})
 		$('#wrap').append( loading ).css('left', (document.body.offsetWidth  - 900 ) / 2 + 'px');
     
-
 		//document.body.style.position = 'relative'
 		//document.body.style.left = ( document.body.offsetWidth  - 900 ) / 2 + 'px'
 		//document.body.style.top = '20px'
 		//document.body.style.overflow = 'hidden';
 
-		div2 = document.body.appendChild( document.createElement( 'div' ) );
-				
-		div2.style.position = 'absolute';
-		
-		div2.style.top = '300px';
-		
-		div2.style.left = '450px';
-
-		div2.style.fontSize = '35px'
-		
-		div2.style.color = '#fff';
-		
-		div2.style.width = '500px';
-		
-		div2.style.height = '500px';
-
+//		div2 = document.body.appendChild( document.createElement( 'div' ) );
+//		div2.style.position = 'absolute';
+//		div2.style.top = '300px';
+//		div2.style.left = '450px';
+//		div2.style.fontSize = '35px'
+//		div2.style.color = '#fff';
+//		div2.style.width = '500px';
+//		div2.style.height = '500px';
 		
 		Util.loadImg( function(){	
 			
@@ -48,8 +39,6 @@ var Game = function(){
 	}
 
 }();
-
-
 
 var gameStart = function(){
 	
@@ -90,7 +79,7 @@ var gameStart = function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-        $('#'+player1.name+'_win').val(+$('#'+player1.name+'_win').val() + 1);
+        $('#'+player1.name+'_win').text(+$('#'+player1.name+'_win').text() + 1);
 //      }
 			player1.ai.stop();
 		})
@@ -99,55 +88,44 @@ var gameStart = function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-        $('#'+player2.name+'_win').val(+$('#'+player2.name+'_win').val() + 1);
+        $('#'+player2.name+'_win').text(+$('#'+player2.name+'_win').text() + 1);
 //      }
 			player2.ai.stop();
 		})
 
-		var pause = false, lock = false;
-	
-		document.onkeydown = function( ev ){
-			var ev = ev || window.event;
-			var keycode = ev.keyCode;
-			if ( keycode === 113 ){
-				( pause = !pause ) ? Timer.stop() : Timer.start();
-			}
-			if ( keycode === 50 || keycode === 49 ){
-				if ( lock ) return;
-				lock = true;
-				mode = keycode - 48;
-				player1.ai.stop();
-				player2.ai.stop();
-				Game.reload();
-				setTimeout( function(){
-					lock = false;
-				}, 1000 )
-			}
-		}	
+//		var pause = false, lock = false;
+//	
+//		document.onkeydown = function( ev ){
+//			var ev = ev || window.event;
+//			var keycode = ev.keyCode;
+//			if ( keycode === 113 ){
+//				( pause = !pause ) ? Timer.stop() : Timer.start();
+//			}
+//			if ( keycode === 50 || keycode === 49 ){
+//				if ( lock ) return;
+//				lock = true;
+//				mode = keycode - 48;
+//				player1.ai.stop();
+//				player2.ai.stop();
+//				Game.reload();
+//				setTimeout( function(){
+//					lock = false;
+//				}, 1000 )
+//			}
+//		}	
 	
 }
 
 var Blood = function(){
 	
-	var div;
-
 	var init = function(){
 
-		div = document.createElement( 'div' );
-		div.style.width = '720px';
-		div.style.height = '32px';
-		div.style.top = '35px';
-		div.style.left = '96px';
-		div.style.position = 'absolute';
-		div.style.zIndex = 9998;
+        var div = $('<div>').addClass('blood');
 
 		$('#wrap').append( div );
 
-		var img = document.createElement( 'img' );
-		img.style.width = '720px';
-		img.style.height = '32px';
-		img.src = 'images/g/bar.gif';
-		div.appendChild( img );
+        var img = $('<img>').attr({src: 'images/g/bar.gif'});
+		div.append( img );
 
 	}
 	
@@ -354,12 +332,9 @@ var Blood = function(){
 	
 }()
 
-
-
 window.onload = function(){
 	Game.init();
 }
-
 
 Game.reload = function(lastGame){
 	player1.keyManage.stop();

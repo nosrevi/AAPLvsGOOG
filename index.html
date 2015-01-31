@@ -39,29 +39,42 @@
     <h2>AAPL vs. GOOG</h2>
     <p>See AAPL fights GOOG in classic Street Fighter game! The more bullish stock has a higher possibility to make the right move.</p>
     </div>
-
-  <div class="row">
-    <div class="col-lg-3" align="right">
-      <div>Bid Price:</div>
-      <div>Change:</div>
-      <div>Change in percent:</div>
-      <div>Wins:</div>
-    </div>
-    <div class="col-lg-3" align="right">
-      <div id='AAPL_quote'></div>
-      <div id='AAPL_change'></div>
-      <div id='AAPL_per'></div>
-      <div><input id='AAPL_win' type='text' value="0"/></div>
-    <div>Draw Game: <input id='draw' type='text' value="0"/></div>
-    </div>
-    <div class="col-lg-6">
-      <div id='GOOG_quote'></div>
-      <div id='GOOG_change'></div>
-      <div id='GOOG_per'></div>
-      <div><input id='GOOG_win' type='text' value="0"/></div>
-    <button type="submit" onClick="test();">Get Data</button>
-    </div>
-  </div>
+<table class="table">
+    <thead> 
+    <tr>
+    <td></td> 
+    <td class="ra">AAPL</td> 
+    <td>GOOG</td> 
+    <td></td> 
+    </tr>
+    </thead> 
+    <tbody> 
+    <tr>
+    <td class="ra">Bid Price:</td> 
+    <td class="ra"><div id='AAPL_quote' class="aapl"></div></td>
+    <td><div id='GOOG_quote' class="goog"></div></td>
+    <td></td> 
+    </tr>
+    <tr>
+    <td class="ra">Change:</td> 
+    <td class="ra"><div id='AAPL_change' class="aapl"></div></td>
+    <td><div id='GOOG_change' class="goog"></div></td>
+    <td></td> 
+    </tr>
+    <tr>
+    <td class="ra">Change in percentage:</td> 
+    <td class="ra"><div id='AAPL_per' class="aapl"></div></td>
+    <td><div id='GOOG_per' class="goog"></div></td>
+    <td></td> 
+    </tr>
+    <tr>
+    <td class="ra">Wins:</td> 
+    <td class="ra"><div id='AAPL_win'>0</div></td>
+    <td><div id='GOOG_win'>0</div></td>
+    <td></td> 
+    </tr>
+    </tbody> 
+</table>
 
 <!--<div id="wrap" style="position: relative; left: 449px; top: 20px; overflow: hidden;">-->
   <div class="row">
@@ -70,6 +83,8 @@
 </div>
 </div>
 <script>
+var bulltest = /^\+/;
+var beartest = /^-/;
 $(document).ready(setInterval(getData,2000));
 getData();
 
@@ -79,6 +94,33 @@ function getData() {
 
     $.getJSON(url, 'q=' + data + "&format=json&env=http://datatables.org/alltables.env")
       .done(function (data) {
+        if(bulltest.test(data.query.results.quote[0].ChangeRealtime)) {
+          $('.aapl').removeClass('bear');
+          $('.aapl').addClass('bull');
+        } else if(beartest.test(data.query.results.quote[0].ChangeRealtime)) {
+          $('.aapl').removeClass('bull');
+          $('.aapl').addClass('bear');
+        }
+        if(data.query.results.quote[0].LastTradePriceOnly > $('#AAPL_quote').text()) {
+          $('.aapl').addClass('bull-fade');
+        } else if(data.query.results.quote[0].LastTradePriceOnly < $('#AAPL_quote').text()) {
+          $('.aapl').addClass('bear-fade');
+        }
+
+        if(bulltest.test(data.query.results.quote[1].ChangeRealtime)) {
+          $('.goog').removeClass('bear');
+          $('.goog').addClass('bull');
+        } else if(beartest.test(data.query.results.quote[1].ChangeRealtime)) {
+          $('.goog').removeClass('bull');
+          $('.goog').addClass('bear');
+        } else if(beartest.test(data.query.results.quote[1].ChangeRealtime)) {
+        }
+        if(data.query.results.quote[0].LastTradePriceOnly > $('#AAPL_quote').text()) {
+          $('.goog').addClass('bull-fade');
+        } else if(data.query.results.quote[0].LastTradePriceOnly < $('#AAPL_quote').text()) {
+          $('.goog').addClass('bear-fade');
+        }
+
         $("#AAPL_quote").text(data.query.results.quote[0].LastTradePriceOnly);
         $("#AAPL_change").text(data.query.results.quote[0].ChangeRealtime);
         $("#AAPL_per").text(data.query.results.quote[0].PercentChange);
@@ -87,22 +129,6 @@ function getData() {
         $("#GOOG_per").text(data.query.results.quote[1].PercentChange);
         var e = $.Event("quote",{AAPL: data.query.results.quote[0].ChangeinPercent, GOOG:data.query.results.quote[1].ChangeinPercent});
         $('body').trigger(e);
-    })
-      .fail(function (jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        $("#result").text('Request failed: ' + err);
-        $("#result2").text('Request failed: ' + err);
-    });
-}
-
-function getHistData() {
-    var url = "http://query.yahooapis.com/v1/public/yql";
-    var data = encodeURIComponent("select * from yahoo.finance.quotes where symbol in ('AAPL', 'GOOG')");
-
-    $.getJSON(url, 'q=' + data + "&format=json&diagnostics=true&env=http://datatables.org/alltables.env")
-      .done(function (data) {
-        $("#result").text("Bid Price: " + data.query.results.quote[0].LastTradePriceOnly + " Change: " + data.query.results.quote[0].Change);
-        $("#result2").text("Bid Price: " + data.query.results.quote[1].LastTradePriceOnly + " Change: " + data.query.results.quote[1].Change);
     })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;

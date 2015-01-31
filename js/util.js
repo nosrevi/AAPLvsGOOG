@@ -68,7 +68,7 @@ var Util = {
 						height: this.height
 					}
 					num += 1;
-					div2.innerHTML = num + '/' + count;
+					//div2.innerHTML = num + '/' + count;
 					if ( count === num ){
 						callback && callback();
 					}
@@ -84,7 +84,7 @@ var Util = {
 	loadAudio: function( callback ){
 		var root = 'sound/', count = this.audios.length, num = 0;
 		for ( var i = 0, c; c = this.audios[ i++ ]; ){
-			div2.innerHTML = i + '/' + count;
+			//div2.innerHTML = i + '/' + count;
 			var audio = new Audio();
 			audio.addEventListener( "canplaythrough", function () {
 				num += 1;
