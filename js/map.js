@@ -47,101 +47,97 @@ var Map = function(){
 		getMaxX: getMaxX
 	}
 
-
-
 }()
 
+var Stage = function( s ){
+        
+    var spirits = s;
+
+    var bg = document.createElement( 'div' );
+
+    $('#wrap').append(bg);
+        
+    var ft1 = document.createElement( 'img' );
+        
+    var ft = document.createElement( 'img' );
+
+    bg.appendChild( ft1 );
+
+    bg.appendChild( ft );
+
+    bg.style.position = 'absolute';
+    bg.style.left = 0;
+    //bg.style.top = '200px';
+    bg.style.width = '910px';
+    bg.style.height = '490px';
+    bg.style.overflow = 'hidden';
+    bg.style.border = '10px ridge #EEE';
+
+    ft1.style.position = 'absolute';
+    ft1.width = 1400;
+    ft1.height = 400;
+    ft1.src = Util.imgObj[ Config.map.bgBehind ].obj.src;
+        
+    ft.style.position = 'absolute';
+    ft.width = 1400;
+    ft.height = 490;
+    ft.src = Util.imgObj[ Config.map.bgFront ].obj.src;
+
+    var f_left = 250;
+
+    bg.scrollLeft = f_left;
+            
+    var f_scrollLeft = f_left;
 
 
-	var Stage = function( s ){
-			
-		var spirits = s;
-	
-		var bg = document.createElement( 'div' );
-	
-		$('#wrap').append(bg);
-			
-		var ft1 = document.createElement( 'img' );
-			
-		var ft = document.createElement( 'img' );
-	
-		bg.appendChild( ft1 );
-	
-		bg.appendChild( ft );
+    return function(){
 
-		bg.style.position = 'absolute';
-		bg.style.left = 0;
-		//bg.style.top = '200px';
-		bg.style.width = '910px';
-		bg.style.height = '490px';
-		bg.style.overflow = 'hidden';
-		bg.style.border = '10px ridge #EEE';
+        var self = this, old_scrollLeft = bg.scrollLeft, scrolling = false, dis;		
 
-		ft1.style.position = 'absolute';
-		ft1.width = 1400;
-		ft1.height = 400;
-		ft1.src = Util.imgObj[ Config.map.bgBehind ].obj.src;
-			
-		ft.style.position = 'absolute';
-		ft.width = 1400;
-		ft.height = 490;
-		ft.src = Util.imgObj[ Config.map.bgFront ].obj.src;
-	
-		var f_left = 250;
-	
-		bg.scrollLeft = f_left;
-				
-		var f_scrollLeft = f_left;
+        var start = function(){
+            old_scrollLeft = bg.scrollLeft;
+        }
+
+        var stop = function(){
+            scrolling = false;
+        }
+
+        var scroll = function( dir ){
+            dis = dir === 'left' ? -3 : 3;
+            old_scrollLeft = bg.scrollLeft;
+            bg.scrollLeft += dis;
+            if ( old_scrollLeft !== bg.scrollLeft ){
+                scrolling = dis;
+            }else{
+                stop();
+            }
+        }
+
+        var pushEnemy = function(){
+            if ( old_scrollLeft === bg.scrollLeft || !scrolling ){
+                return;
+            }	
+            self.enemy.left = self.enemy.left - dis;	
+        }
+
+        var pushEnemy2 = function(){
+            //self.enemy.left = self.enemy.left + ( old_scrollLeft - bg.scrollLeft );
+        }
 
 
-		return function(){
-
-			var self = this, old_scrollLeft = bg.scrollLeft, scrolling = false, dis;		
-
-			var start = function(){
-				old_scrollLeft = bg.scrollLeft;
-			}
-
-			var stop = function(){
-				scrolling = false;
-			}
-
-			var scroll = function( dir ){
-				dis = dir === 'left' ? -3 : 3;
-				old_scrollLeft = bg.scrollLeft;
-				bg.scrollLeft += dis;
-				if ( old_scrollLeft !== bg.scrollLeft ){
-					scrolling = dis;
-				}else{
-					stop();
-				}
-			}
-
-			var pushEnemy = function(){
-				if ( old_scrollLeft === bg.scrollLeft || !scrolling ){
-					return;
-				}	
-				self.enemy.left = self.enemy.left - dis;	
-			}
-
-			var pushEnemy2 = function(){
-				//self.enemy.left = self.enemy.left + ( old_scrollLeft - bg.scrollLeft );
-			}
-
-
-			var isScrolling = function(){
-				return scrolling
-			}
-			
-			return {
-				start: start,
-				stop: stop,
-				scroll: scroll,
-				pushEnemy: pushEnemy,
-				pushEnemy2: pushEnemy2,
-				isScrolling: isScrolling
-			}
-					
-		}
-		
-	}
+        var isScrolling = function(){
+            return scrolling
+        }
+        
+        return {
+            start: start,
+            stop: stop,
+            scroll: scroll,
+            pushEnemy: pushEnemy,
+            pushEnemy2: pushEnemy2,
+            isScrolling: isScrolling
+        }
+                
+    }
+    
+}
