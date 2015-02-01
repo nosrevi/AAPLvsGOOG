@@ -26,6 +26,7 @@ var Game = function(){
 			
 			Util.loadAudio( function(){
 			
+        $('#start').prop('disabled', false);
 				gameStart();
 
 			})
@@ -62,34 +63,36 @@ var gameStart = function(){
 
 		Spirit.interface( 'Stage', Stage );
 
-		player1.init( 280, 240, 1 );   //left, top, direction
-		player2.init( 480, 240, -1 );  //left, top, direction
+		player1.init( 80, 240, 1 );   //left, top, direction
+		player2.init( 680, 240, -1 );  //left, top, direction
 	
 		Blood.init();
 
 		player1.keyManage.stop();
 		player1.ai = player1.implement( 'Ai' );
-		player1.ai.start();
+		//player1.ai.start();
 		
 		player2.keyManage.stop();
 		player2.ai = player2.implement( 'Ai' );
-		player2.ai.start();
+		//player2.ai.start();
 
 		player1.enemy.bloodBar.event.listen( 'empty', function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-        $('#'+player1.name+'_win').text(+$('#'+player1.name+'_win').text() + 1);
+      $('#'+player1.name+'_win').text(+$('#'+player1.name+'_win').text() + 1);
 //      }
 			player1.ai.stop();
+			player2.ai.stop();
 		})
 
 		player2.enemy.bloodBar.event.listen( 'empty', function(){
 //      if (player_dead == 2) {
 //        $('#draw').val(+$('#draw').val() + 1);
 //      } else {
-        $('#'+player2.name+'_win').text(+$('#'+player2.name+'_win').text() + 1);
+      $('#'+player2.name+'_win').text(+$('#'+player2.name+'_win').text() + 1);
 //      }
+			player1.ai.stop();
 			player2.ai.stop();
 		})
 
@@ -114,6 +117,12 @@ var gameStart = function(){
 //			}
 //		}	
 	
+}
+
+var fightStart = function(){
+  player1.ai.start();
+  player2.ai.start();
+  $('#start').prop('disabled', true);
 }
 
 var Blood = function(){
@@ -344,23 +353,19 @@ Game.reload = function(lastGame){
 	setTimeout( function(){
 		player1.play( 'force_wait', 'force' );
 		setTimeout( function(){
-		 player1.animate.moveto( 280, 240 );
+		 player1.animate.moveto( 80, 240 );
 		 player1.keyManage.start();
 		 player1.direction = 1;
 		}, 30 )
 
 		player2.play( 'force_wait', 'force' );
 		setTimeout( function(){
-		 player2.animate.moveto( 480, 240 );
+		 player2.animate.moveto( 680, 240 );
 		 player2.keyManage.start();
 		 player2.direction = -1;
-		 if ( mode === 1 ){
-		 	player1.ai.start();
-		 	player2.ai.start();
-		 }
 		}, 30 )
+    $('#start').prop('disabled', false);
 		
 	}, 1000 )
-
 
 }

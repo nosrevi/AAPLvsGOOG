@@ -14,7 +14,7 @@
   <script src="js/map.js"></script>
   <script src="js/main.js"></script>
   <script src="js/game.js"></script>
-  <link rel="stylesheet" type="text/css" href="main.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
@@ -78,9 +78,17 @@
 
 <!--<div id="wrap" style="position: relative; left: 449px; top: 20px; overflow: hidden;">-->
   <div class="row">
-<div id="wrap">
-<canvas id="canvas"/></canvas>
-</div>
+  <div id="wrap">
+  <canvas id="canvas"/></canvas>
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="footer">
+      <div id="online"></div>
+      <button id="start" disabled="disabled" onclick="fightStart();">Start A Fight</button>
+    </div>
+  </div>
 </div>
 <script>
 var bulltest = /^\+/;
@@ -138,7 +146,26 @@ function getData() {
 }
 
 </script>
-</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  socket.on('online', function(data){
+    $('#online').text(data.msg);
+  });
+
+  socket.on('started', function(data){
+    $('#start').prop('disabled', true);
+  });
+
+  $('#start').click(function(){
+    socket.emit('start', $('#start').attr('disabled'));
+    return false;
+  });
+
+  $('#start').change(function(){
+    console.log('change');
+  });
+</script>
 </body>
 
 
